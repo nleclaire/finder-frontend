@@ -12,11 +12,10 @@ export class CityService {
 
   getCities(): any{
     // get JWT token from localStorage
-    // const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
     const requestOptions = {
       headers: new HttpHeaders({
-        // Authorization: `Bearer ${token}`
-        // 'Access-Control-Allow-Methods': 'GET',
+        Authorization: `Bearer ${token}`
       }),
     };
     return this.http.get(this.apiUrl, requestOptions);

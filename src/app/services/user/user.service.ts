@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 
-const herokuUrl = 'https://glacial-reef-44046.herokuapp.com/api';
+const herokuUrl = 'https://glacial-reef-44046.herokuapp.com';
 
 @Injectable({
   providedIn: 'root'
