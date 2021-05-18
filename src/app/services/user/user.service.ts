@@ -13,7 +13,7 @@ export class UserService {
   currentUser: any;
   errorText: string;
   navSubject = new Subject();
-  // searchSubject = new Subject();
+  errorSubject = new Subject();
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -21,7 +21,6 @@ export class UserService {
     this.http
       .post(`${herokuUrl}/auth/users/register`, newUser)
       .subscribe(response => {
-        localStorage.removeItem('currentError');
         this.router.navigate(['']);
       }, err => this.getAuthErrorText(err['status'])
     );
@@ -34,7 +33,6 @@ export class UserService {
         const token = response['jwt'];
         localStorage.setItem('currentUser', user);
         localStorage.setItem('token', `${token}`);
-        localStorage.removeItem('currentError');
         this.router.navigate(['']);
         this.currentUser = user.emailAddress;
         this.navSubject.next(this.currentUser);
@@ -47,7 +45,6 @@ export class UserService {
   logoutUser(): void {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
-    localStorage.removeItem('currentError');
     this.currentUser = null;
     this.navSubject.next(this.currentUser);
     // this.searchSubject.next(this.currentUser);
@@ -56,17 +53,16 @@ export class UserService {
 
   getAuthErrorText(statusCode: any): string{
     console.log('STATUS: ' + statusCode);
-    console.log('Current error: ' + localStorage.getItem('currentError'));
 
     switch (statusCode){
       case 409:
-        localStorage.setItem('currentError', 'User already exists!');
+        this.errorSubject.next('User already exists!');
         break;
       case 403:
-        localStorage.setItem('currentError', 'Incorrect Password!');
+        this.errorSubject.next('Incorrect Password!!');
         break;
       case 404:
-        localStorage.setItem('currentError', 'User with that email does not exist!');
+        this.errorSubject.next('User with that email does not exist!!');
         break;
       default:
         console.log(statusCode);

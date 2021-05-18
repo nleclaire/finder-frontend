@@ -14,14 +14,12 @@ export class LoginComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.errorSubject.subscribe((error: string) => this.errorText = error);
   }
 
   loginUser(): void {
     const user = {emailAddress: this.emailAddress, password: this.password};
     this.userService.loginUser(user);
-    if (localStorage.getItem('currentError')){
-      this.errorText = localStorage.getItem('currentError');
-    }
   }
 
 }
