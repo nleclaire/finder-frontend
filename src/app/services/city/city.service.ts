@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CityService {
-  apiUrl = 'http://localhost:9092/api/cities';
+  apiUrl = 'https://glacial-reef-44046.herokuapp.com/api/cities';
   cities: any;
 
   constructor(private http: HttpClient) { }
 
   getCities(): any{
-    return this.http.get(this.apiUrl);
+    // get JWT token from localStorage
+    // const token = localStorage.getItem('token');
+    const requestOptions = {
+      headers: new HttpHeaders({
+        // Authorization: `Bearer ${token}`
+        // 'Access-Control-Allow-Methods': 'GET',
+      }),
+    };
+    return this.http.get(this.apiUrl, requestOptions);
   }
 
 }

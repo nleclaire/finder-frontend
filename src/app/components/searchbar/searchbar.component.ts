@@ -13,7 +13,8 @@ export class SearchbarComponent implements OnInit {
   constructor(private cityService: CityService) { }
 
   ngOnInit(): void {
-    this.cities = this.cityService.getCities().subscribe(response => { console.log(response); });
+    this.cityService.getCities().subscribe(response => { console.log(response); });
+    // => this.cities = response
   }
 
 }
