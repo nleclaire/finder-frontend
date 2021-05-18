@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {Subject} from 'rxjs';
 
 const herokuUrl = 'https://glacial-reef-44046.herokuapp.com';
 
@@ -9,9 +10,9 @@ const herokuUrl = 'https://glacial-reef-44046.herokuapp.com';
 })
 export class UserService {
 
-  currentUser: string;
+  currentUser: any;
   errorText: string;
-  // navSubject = new Subject();
+  navSubject = new Subject();
   // searchSubject = new Subject();
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -20,55 +21,56 @@ export class UserService {
     this.http
       .post(`${herokuUrl}/auth/users/register`, newUser)
       .subscribe(response => {
-        // localStorage.removeItem('currentError');
-        this.router.navigate(['/']);
-      }, err =>
-        // localStorage.setItem('currentError', `${this.getAuthErrorText(err)}`));
-        console.log(err)
-      );
+        localStorage.removeItem('currentError');
+        this.router.navigate(['']);
+      }, err => this.getAuthErrorText(err['status'])
+    );
   }
 
   loginUser(user): void {
     // console.log(user);
-    this.http
-      .post(`${herokuUrl}/auth/users/login`, user)
+    this.http.post(`${herokuUrl}/auth/users/login`, user)
       .subscribe(response => {
         const token = response['jwt'];
-        localStorage.setItem('currentUser', `${user.emailAddress}`);
+        localStorage.setItem('currentUser', user);
         localStorage.setItem('token', `${token}`);
-        // localStorage.removeItem('currentError');
-        this.router.navigate(['/']);
-        // this.currentUser = user.emailAddress;
-        // this.navSubject.next(this.currentUser);
+        localStorage.removeItem('currentError');
+        this.router.navigate(['']);
+        this.currentUser = user.emailAddress;
+        this.navSubject.next(this.currentUser);
         // this.searchSubject = new BehaviorSubject(this.currentUser);
         // this.searchSubject.next(this.currentUser);
-      }, err => console.log(err)); // localStorage.setItem('currentError', `${this.getAuthErrorText(err)}`));
+      }, err => this.getAuthErrorText(err['status'])
+    );
   }
 
   logoutUser(): void {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
     localStorage.removeItem('currentError');
-    this.currentUser = '';
-    // this.navSubject.next(this.currentUser);
+    this.currentUser = null;
+    this.navSubject.next(this.currentUser);
     // this.searchSubject.next(this.currentUser);
     this.router.navigate(['/login']);
   }
 
-  // getAuthErrorText(response: any): string{
-  //   // console.log("STATUS: " + response['status']);
-  //   // console.log('Current error: ' + localStorage.getItem('currentError'))
-  //   if (response['status'] == 409) {
-  //     console.log(409);
-  //     return 'User already exists!';
-  //   }
-  //   if (response['status'] == 403) {
-  //     console.log(403);
-  //     return 'Wrong password provided!';
-  //   }
-  //   if (response['status'] == 404) {
-  //     console.log(404);
-  //     return 'User with these credentials does not exist!';
-  //   }
-  // }
+  getAuthErrorText(statusCode: any): string{
+    console.log('STATUS: ' + statusCode);
+    console.log('Current error: ' + localStorage.getItem('currentError'));
+
+    switch (statusCode){
+      case 409:
+        localStorage.setItem('currentError', 'User already exists!');
+        break;
+      case 403:
+        localStorage.setItem('currentError', 'Incorrect Password!');
+        break;
+      case 404:
+        localStorage.setItem('currentError', 'User with that email does not exist!');
+        break;
+      default:
+        console.log(statusCode);
+        return 'You dun messed up now!';
+    }
+  }
 }

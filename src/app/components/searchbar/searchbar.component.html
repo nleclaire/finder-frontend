@@ -4,11 +4,11 @@
            [ngModelOptions]="{standalone: true}">
   </div>
 
-  <div *ngIf="searchText !== ''">
-    <ul *ngFor="let city of cities | filter: searchText">
-      <a routerLink="cities/{{city.id}}"> {{city.name}} </a>
-    </ul>
-  </div>
+<!--  <div *ngIf="searchText !== ''">-->
+<!--    <ul *ngFor="let city of cities | filter: searchText">-->
+<!--      <a routerLink="cities/{{city.id}}"> {{city.name}} </a>-->
+<!--    </ul>-->
+<!--  </div>-->
 
   <button size="sm" class="search" type="submit">Search</button>
 </form>

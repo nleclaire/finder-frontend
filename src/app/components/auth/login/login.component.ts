@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user/user.service';
 
 @Component({
@@ -19,6 +19,9 @@ export class LoginComponent implements OnInit {
   loginUser(): void {
     const user = {emailAddress: this.emailAddress, password: this.password};
     this.userService.loginUser(user);
+    if (localStorage.getItem('currentError')){
+      this.errorText = localStorage.getItem('currentError');
+    }
   }
 
 }
