@@ -24,23 +24,23 @@
   <!-- collapsible add button -->
   <!-- only rendered when user is logged in -->
   <div *ngIf="currentUser && cities" class="container center-align">
-    <form *ngIf="isFormVisible" class="col s12">
+    <form *ngIf="isFormVisible" #cityForm="ngForm" class="col s12">
       <div class="row">
         <div class="input-field col s6" style="margin: auto">
           <input [(ngModel)]="name" id="name" type="text" class="validate white-text" name="name">
           <label for="name">City name</label>
         </div>
-        <button (click)="createCity()" class="btn waves-effect waves-light">Add city</button>
+        <button (click)="createCity(); cityForm.resetForm()" class="btn waves-effect waves-light">Add city</button>
       </div>
     </form>
 
     <div *ngIf="!isFormVisible; then content else contentElse"></div>
     <ng-template #content>
-      <a class="btn-floating red btn-large" (click)="toggleAddTopicForm()"><i class="large material-icons">+</i></a>
+      <a class="btn-floating red btn-large" (click)="toggleAddCityForm()"><i class="large material-icons">+</i></a>
     </ng-template>
 
     <ng-template #contentElse>
-      <a class="btn-floating red btn-large" (click)="toggleAddTopicForm()"><i class="large material-icons">-</i></a>
+      <a class="btn-floating red btn-large" (click)="toggleAddCityForm()"><i class="large material-icons">-</i></a>
     </ng-template>
   </div>
 </div>

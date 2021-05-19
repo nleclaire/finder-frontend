@@ -8,7 +8,7 @@ import {Subject} from 'rxjs';
 export class CityService {
   apiUrl = 'https://glacial-reef-44046.herokuapp.com/api/cities';
   cities$: any;
-  // citiesSubject = new Subject();
+  citiesSubject = new Subject();
 
   constructor(private http: HttpClient) { }
 
@@ -37,7 +37,7 @@ export class CityService {
       }),
     };
     this.http.post(this.apiUrl, cityObject, requestOptions)
-      .subscribe(response => console.log(response));
+      .subscribe(response => this.citiesSubject.next(response));
   }
 
 }

@@ -8,7 +8,7 @@ import {UserService} from '../../services/user/user.service';
   styleUrls: ['./cities-page.component.less']
 })
 export class CitiesPageComponent implements OnInit {
-  cities: [];
+  cities: any;
   currentUser: any;
   isFormVisible: boolean;
 
@@ -21,15 +21,19 @@ export class CitiesPageComponent implements OnInit {
     this.currentUser = this.userService.currentUser;
   }
 
-  toggleAddTopicForm(): void{
+  toggleAddCityForm(): void{
     this.isFormVisible = !this.isFormVisible;
   }
 
+  // create new city based on form input
   createCity(): void {
     // expected fields for POST "/api/cities":
     //    name
     const cityObject = JSON.stringify({ name: this.name });
     this.cityService.createCity(cityObject);
+    this.cityService.citiesSubject.subscribe(response => {
+      this.cities = [...this.cities, response];
+    });
   }
 
 }
