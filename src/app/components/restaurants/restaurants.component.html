@@ -1,21 +1,16 @@
 <div class="row restaurantContainer">
   <div class="col s12 m6">
     <div class="card blue-grey darken-1">
-      <div class="card white-text">
+      <div class="card-top black-text">
+        <img src="favicon.ico">
         <span class="card-title">Restaurant</span>
       </div>
-     <div class="card-content white-text">
-        <p>Menu Item #1</p>
-        <p>Description #1</p>
-        <p>Menu Item #1</p>
-        <p>Description #1</p>
-        <p>Menu Item #1</p>
-        <p>Description #1</p>
-        <p>Menu Item #1</p>
-        <p>Description #1</p>
+     <div *ngFor="let menuItem of restaurants" class="card-content white-text">
+        <h5>{{menuItem.name}}</h5>
+        <p>{{menuItem.description}}</p>
       </div>
       <div class="card-action">
-        <a href="#">Add Menu Item</a>
+        <a href="/">Add Menu Item</a>
         <a href="#">Edit Menu Item</a>
       </div>
     </div>
