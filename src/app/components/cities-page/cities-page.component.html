@@ -1,9 +1,7 @@
 <div class="container">
   <div *ngIf="cities">
     <div *ngFor="let city of cities">
-      <div class="white-text">
-        {{city.name}}
-      </div>
+      <app-city [city]="city"></app-city>
     </div>
   </div>
 

@@ -3,10 +3,10 @@ import {CityService} from '../../services/city/city.service';
 
 @Component({
   selector: 'app-cities',
-  templateUrl: './cities.component.html',
-  styleUrls: ['./cities.component.less']
+  templateUrl: './cities-page.component.html',
+  styleUrls: ['./cities-page.component.less']
 })
-export class CitiesComponent implements OnInit {
+export class CitiesPageComponent implements OnInit {
   cities: [];
 
   constructor(private cityService: CityService) { }
