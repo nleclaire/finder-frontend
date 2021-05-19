@@ -6,7 +6,7 @@
       <li><a routerLink="/cities">Cities</a></li>
       <li *ngIf="!currentUser"><a routerLink="/login">Log In</a></li>
       <li *ngIf="!currentUser"><a routerLink="/register">Sign Up</a></li>
-      <li><a *ngIf="currentUser" class = "btn dropdown-button" >{{currentUser}}</a></li>
+      <li><a *ngIf="currentUser" class = "btn dropdown-button blue-grey accent-1" >{{currentUser}}</a></li>
       <li *ngIf="currentUser" (click)="logout()"><a>Log out</a></li>
     </ul>
   </div>

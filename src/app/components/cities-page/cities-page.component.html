@@ -1,10 +1,12 @@
 <div class="container" style="max-width: 60vw">
+  <!-- render a list of cities if it exists -->
   <div *ngIf="cities">
     <div *ngFor="let city of cities">
       <app-city [city]="city"></app-city>
     </div>
   </div>
 
+  <!-- loading icon while getting cities -->
   <div *ngIf="!cities" class="center" style="margin-top: 50px">
     <div class="preloader-wrapper big active">
       <div class="spinner-layer spinner-red-only">
@@ -19,10 +21,12 @@
     </div>
   </div>
 
-  <div *ngIf="currentUser" class="container center-align">
+  <!-- collapsible add button -->
+  <!-- only rendered when user is logged in -->
+  <div *ngIf="currentUser && cities" class="container center-align">
     <form *ngIf="isFormVisible" class="col s12">
       <div class="row">
-        <div class="input-field col s6">
+        <div class="input-field col s6" style="margin: auto">
           <input [(ngModel)]="name" id="name" type="text" class="validate white-text" name="name">
           <label for="name">City name</label>
         </div>
@@ -30,13 +34,13 @@
       </div>
     </form>
 
-    <div *ngIf="!isFormVisible;then content else contentElse"></div>
+    <div *ngIf="!isFormVisible; then content else contentElse"></div>
     <ng-template #content>
       <a class="btn-floating red btn-large" (click)="toggleAddTopicForm()"><i class="large material-icons">+</i></a>
     </ng-template>
 
     <ng-template #contentElse>
-      <a class="btn-floating red btn-large" (click)="toggleAddTopicForm()"><i class="large material-icons">keyboard_arrow_up</i></a>
+      <a class="btn-floating red btn-large" (click)="toggleAddTopicForm()"><i class="large material-icons">-</i></a>
     </ng-template>
   </div>
 </div>
