@@ -28,6 +28,12 @@ export class CityService {
     // });
   }
 
+  getCity(name: string): any{
+    this.getCities$().subscribe(response => {
+      return this.citiesSubject.next(response.filter(item => item.name === name));
+    });
+  }
+
   createCity(cityObject): any {
     const token = localStorage.getItem('token');
     const requestOptions = {
