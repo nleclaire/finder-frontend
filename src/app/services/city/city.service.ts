@@ -6,7 +6,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class CityService {
   apiUrl = 'https://glacial-reef-44046.herokuapp.com/api/cities';
-  cities: any;
+  cities$: any;
 
   constructor(private http: HttpClient) { }
 
@@ -18,7 +18,7 @@ export class CityService {
         Authorization: `Bearer ${token}`
       }),
     };
-    return this.http.get(this.apiUrl, requestOptions);
+    return this.cities$ = this.http.get(this.apiUrl, requestOptions);
   }
 
 }

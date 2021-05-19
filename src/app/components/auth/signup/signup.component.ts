@@ -15,6 +15,7 @@ export class SignupComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.errorSubject.subscribe((error: string) => this.errorText = error);
   }
 
   registerUser(): void{
