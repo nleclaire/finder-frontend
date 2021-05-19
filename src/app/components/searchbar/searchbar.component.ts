@@ -13,10 +13,11 @@ export class SearchbarComponent implements OnInit {
   constructor(private cityService: CityService) { }
 
   ngOnInit(): void {
-    this.cityService.getCities().subscribe(() => {
+    // subscribes to an observable
+    this.cityService.getCities$().subscribe(() => {
       this.cities = this.cityService.cities$.subscribe(response => {
         this.cities = response;
-        console.log(this.cities);
+        // console.log(this.cities);
       });
     });
   }
