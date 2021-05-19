@@ -11,6 +11,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { CitiesComponent } from './components/cities/cities.component';
+import { RestaurantsComponent } from './components/restaurants/restaurants.component';
+import { MenuItemsComponent } from './components/menu-items/menu-items.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { CitiesComponent } from './components/cities/cities.component';
     SearchbarComponent,
     LoginComponent,
     SignupComponent,
-    CitiesComponent
+    CitiesComponent,
+    RestaurantsComponent,
+    MenuItemsComponent
   ],
   imports: [
     BrowserModule,
