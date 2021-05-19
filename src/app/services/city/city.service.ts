@@ -28,4 +28,16 @@ export class CityService {
     // });
   }
 
+  createCity(cityObject): any {
+    const token = localStorage.getItem('token');
+    const requestOptions = {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }),
+    };
+    this.http.post(this.apiUrl, cityObject, requestOptions)
+      .subscribe(response => console.log(response));
+  }
+
 }

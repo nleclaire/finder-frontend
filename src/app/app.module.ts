@@ -10,14 +10,10 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
-<<<<<<< HEAD
 import { CitiesPageComponent } from './components/cities-page/cities-page.component';
-import { CityComponent } from './components/city/city.component';
-=======
-import { CitiesComponent } from './components/cities/cities.component';
 import { RestaurantsComponent } from './components/restaurants/restaurants.component';
 import { MenuItemsComponent } from './components/menu-items/menu-items.component';
->>>>>>> main
+import {CityComponent} from './components/city/city.component';
 
 @NgModule({
   declarations: [
@@ -27,14 +23,10 @@ import { MenuItemsComponent } from './components/menu-items/menu-items.component
     SearchbarComponent,
     LoginComponent,
     SignupComponent,
-<<<<<<< HEAD
     CitiesPageComponent,
-    CityComponent
-=======
-    CitiesComponent,
+    CityComponent,
     RestaurantsComponent,
     MenuItemsComponent
->>>>>>> main
   ],
   imports: [
     BrowserModule,
