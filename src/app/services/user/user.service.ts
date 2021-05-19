@@ -36,8 +36,6 @@ export class UserService {
         this.router.navigate(['']);
         this.currentUser = user.emailAddress;
         this.navSubject.next(this.currentUser);
-        // this.searchSubject = new BehaviorSubject(this.currentUser);
-        // this.searchSubject.next(this.currentUser);
       }, err => this.getAuthErrorText(err['status'])
     );
   }
@@ -47,7 +45,6 @@ export class UserService {
     localStorage.removeItem('token');
     this.currentUser = null;
     this.navSubject.next(this.currentUser);
-    // this.searchSubject.next(this.currentUser);
     this.router.navigate(['/login']);
   }
 

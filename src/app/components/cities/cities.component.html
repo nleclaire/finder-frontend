@@ -1,1 +1,23 @@
-<div>Cities works!</div>
+<div class="container">
+  <div *ngIf="cities">
+    <div *ngFor="let city of cities">
+      <div class="white-text">
+        {{city.name}}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="cities === []">
+    <div class="preloader-wrapper big active">
+      <div class="spinner-layer spinner-red-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
