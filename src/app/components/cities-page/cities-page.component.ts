@@ -27,7 +27,6 @@ export class CitiesPageComponent implements OnInit {
 
   createCity(): void {
     // expected fields for POST "/api/cities":
-    //
     //    name
     const cityObject = JSON.stringify({ name: this.name });
     this.cityService.createCity(cityObject);
