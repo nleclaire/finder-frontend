@@ -8,7 +8,11 @@ import {MenuItemService} from '../../services/menuItem/menu-item.service';
 })
 export class MenuItemsComponent implements OnInit {
 
-  menuItems: [];
+  public menuItemName: string;
+  public menuItemDescription: string;
+  errorText = '';
+  menuItems: any[];
+  isEditing;
 
   constructor(private menuItemService: MenuItemService) { }
 
@@ -17,6 +21,14 @@ export class MenuItemsComponent implements OnInit {
       this.menuItems = response;
       console.log(this.menuItems);
     });
+    this.menuItemService.errorSubject.subscribe((error: string) => this.errorText = error);
+  }
+
+  addMenuItem(): any {
+    const newItem = {name: this.menuItemName, description: this.menuItemDescription};
+    this.menuItemService.addMenuItem(newItem).subscribe(response => {
+      this.menuItems = [...this.menuItems, response];
+     });
   }
 
 }
