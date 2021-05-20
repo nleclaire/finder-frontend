@@ -1,15 +1,29 @@
 <div *ngIf="currentCity" class="container">
   <div *ngIf="restaurants"><!-- if there are any restaurants -->
-    <div *ngFor="let restaurant of restaurants; index as i" class="card"><!-- render restaurants -->
+    <div *ngFor="let restaurant of restaurants" class="card"><!-- render restaurants -->
       <div class="card-title">
         <!-- index of restaurants as i -->
-        {{restaurants[i].name}}
+        {{restaurant.name}}
       </div>
       <div class="card-content">
-        {{restaurants[i].category}}
+        {{restaurant.category}}
       </div>
     </div>
 
+    <!-- loading icon while getting cities -->
+    <div *ngIf="!restaurants" class="center" style="margin-top: 50px">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-red-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="btn white-text">Delete me</div>

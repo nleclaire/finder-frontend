@@ -8,7 +8,7 @@ export class HttpService {
 
   constructor() { }
 
-  getAuthenticationHeaders(): any {
+  getAuthentication(): any {
     const token = localStorage.getItem('token');
     return {
       headers: new HttpHeaders({

@@ -13,6 +13,7 @@ export class RestaurantsScreenComponent implements OnInit {
   cityName: string;
   currentCity: any;
 
+  rest: any;
   restaurants: any;
 
   constructor(private route: ActivatedRoute, private cityService: CityService, private restaurantService: RestaurantService) { }
@@ -24,25 +25,27 @@ export class RestaurantsScreenComponent implements OnInit {
       this.cityName = params.name;
 
       // subject will emit a new city object, so we must subscribe before then
+      // more on subjects and observers
+      // https://stackoverflow.com/questions/45654470/have-subject-emit-a-value-when-it-is-subscribed-to
       this.cityService.citiesSubject.subscribe(response => {
         this.currentCity = response;
-        console.log(this.currentCity);
       });
 
       // emit a new city, filtered by name
       this.cityService.getCity(this.cityName);
 
-      // set restaurants
-      this.getRestaurants();
-      console.log(this.restaurants);
+      // get city Restaurants
+      this.getCityRestaurants();
     });
   }
 
-  getRestaurants(): any {
-    this.restaurants = this.restaurantService.getRestaurants$()
-      .subscribe(response => {
-        this.restaurants = response;
-    });
+  getCityRestaurants(): any {
+    // reset restaurants
+    this.restaurants = [];
+    // subscribe to restaurantSubject
+    this.restaurantService.restaurantSubject.subscribe(response => this.restaurants = [...this.restaurants, response]); // add restaurant
+    // call get City Restaurants based on cityName
+    this.restaurantService.getCityRestaurants(this.cityName);
   }
 
 }

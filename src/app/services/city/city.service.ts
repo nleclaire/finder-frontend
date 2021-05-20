@@ -16,21 +16,23 @@ export class CityService {
   // returns an observable
   getCities$(): any{
     // set headers using http service
-    const headers = this.httpService.getAuthenticationHeaders();
+    const headers = this.httpService.getAuthentication();
     return this.cities$ = this.http.get(this.apiUrl, headers);
   }
 
   // emit a new city filtered by name
+  // must be subscribed before then
   getCity(name: string): any {
     this.getCities$().subscribe(response => {
       return this.citiesSubject.next(response.filter(item => item.name === name)); // then is now
     });
   }
 
+  // post a city object to the api
   createCity(cityObject): any {
-    const headers = this.httpService.getAuthenticationHeaders();
+    const headers = this.httpService.getAuthentication();
     this.http.post(this.apiUrl, cityObject, headers)
-      .subscribe(response => this.citiesSubject.next(response));
+      .subscribe(response => this.citiesSubject.next(response)); // emit so that we can read the response
   }
 
 }
