@@ -50,6 +50,9 @@ export class MenuItemsComponent implements OnInit {
       this.menuItems = [...this.menuItems, response];
     });
   }
+  deleteMenuItem(): any {
+
+  }
 
   addMenuItem(): any {
     const newItem = {name: this.menuItemName, description: this.menuItemDescription};
