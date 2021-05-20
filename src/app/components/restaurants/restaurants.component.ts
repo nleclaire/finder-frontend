@@ -8,23 +8,15 @@ import {MenuItemService} from '../../services/menuItem/menu-item.service';
   styleUrls: ['./restaurants.component.less']
 })
 export class RestaurantsComponent implements OnInit {
-  cities: [];
-  restaurants: [];
-  menuItems: any[];
-  errorText = '';
-  @Input() isEditing = false;
+  // cities: [];
+  // restaurants: [];
+  // menuItems: any[];
+  // errorText = '';
+  // @Input() isEditing = false;
 
-  constructor(private menuItemService: MenuItemService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.menuItemService.getMenuItems$().subscribe(response => {
-      this.menuItems = response;
-      console.log(this.menuItems);
-    });
-    this.menuItemService.errorSubject.subscribe((error: string) => this.errorText = error);
-  }
-  editingEnabled(): void {
-    this.isEditing = true;
-  }
+    }
 
 }

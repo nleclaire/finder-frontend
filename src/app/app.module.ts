@@ -15,6 +15,7 @@ import { RestaurantsComponent } from './components/restaurants/restaurants.compo
 import { MenuItemsComponent } from './components/menu-items/menu-items.component';
 import {CityComponent} from './components/city/city.component';
 import { RestaurantsScreenComponent } from './components/restaurants-screen/restaurants-screen.component';
+import { MenuItemsListComponent } from './components/menu-items-list/menu-items-list.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RestaurantsScreenComponent } from './components/restaurants-screen/rest
     CityComponent,
     RestaurantsComponent,
     MenuItemsComponent,
-    RestaurantsScreenComponent
+    RestaurantsScreenComponent,
+    MenuItemsListComponent
   ],
   imports: [
     BrowserModule,

@@ -5,14 +5,7 @@
         <img src="favicon.ico">
         <span class="card-title">Restaurant</span>
       </div>
-     <div *ngFor="let menuItem of menuItems" class="card-content white-text">
-        <h5>{{menuItem.name}}</h5>
-        <p>{{menuItem.description}}</p>
-      </div>
-      <div class="card-action">
-        <a routerLink="/menuItems">Add Menu Item</a>
-        <a (click)="editingEnabled()" routerLink="/menuItems">Edit Menu Item</a>
-      </div>
+    <app-menu-items-list></app-menu-items-list>
     </div>
   </div>
 </div>

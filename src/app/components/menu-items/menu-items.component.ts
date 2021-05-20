@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MenuItemService} from '../../services/menuItem/menu-item.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class MenuItemsComponent implements OnInit {
   public menuItemDescription: string;
   errorText = '';
   menuItems: any[];
-  isEditing;
+  @Input() isEditing;
 
   constructor(private menuItemService: MenuItemService) { }
 
