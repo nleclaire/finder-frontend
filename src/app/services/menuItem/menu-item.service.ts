@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
+import {HttpService} from '../http/http.service';
 
 
 @Injectable({
@@ -14,28 +15,17 @@ export class MenuItemService {
   navSubject = new Subject();
   errorSubject = new Subject();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private httpService: HttpService, private router: Router) { }
 
   addMenuItem(newItem): any {
     console.log(newItem);
-    const token = localStorage.getItem('token');
-    const requestOptions = {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      }),
-    };
+    const requestOptions = this.httpService.getAuthentication();
     return this.http
       .post(this.apiUrl, newItem, requestOptions);
   }
 
   getMenuItems$(): any {
-    // get JWT token from localStorage
-    const token = localStorage.getItem('token');
-    const requestOptions = {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      }),
-    };
+    const requestOptions = this.httpService.getAuthentication();
     return this.menuItems$ = this.http.get(this.apiUrl, requestOptions);
   }
 

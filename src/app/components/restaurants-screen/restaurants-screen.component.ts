@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CityService} from '../../services/city/city.service';
 import {RestaurantService} from '../../services/restaurant/restaurant.service';
-import { pipe } from 'rxjs';
-import {mergeAll, map} from 'rxjs/operators';
+import {UserService} from '../../services/user/user.service';
 
 @Component({
   selector: 'app-restaurants-screen',
@@ -14,14 +13,25 @@ export class RestaurantsScreenComponent implements OnInit {
   cities: any;
   cityName: string;
   currentCity: any;
+  currentUser: any;
+  isFormVisible: boolean;
+
+  restaurantName: string;
+  restaurantAddress: string;
+  restaurantCategory: string;
 
   rest: any;
-  restaurants: any;
+  restaurants = [];
 
-  constructor(private route: ActivatedRoute, private cityService: CityService, private restaurantService: RestaurantService) { }
+  constructor(private route: ActivatedRoute,
+              private userService: UserService,
+              private cityService: CityService,
+              private restaurantService: RestaurantService) { }
 
   // subscribe to params to get city name
   ngOnInit(): void {
+    this.currentUser = this.userService.currentUser;
+
     this.route.params.subscribe(params => {
 
       this.cityName = params.name;
@@ -45,11 +55,21 @@ export class RestaurantsScreenComponent implements OnInit {
     // reset restaurants
     this.restaurants = [];
     // subscribe to restaurantSubject
-    this.restaurantService.restaurantSubject.subscribe(response => {
-      this.restaurants = response;
-    }); // add restaurant
+    this.restaurantService.restaurantSubject.subscribe((response: any) => this.restaurants = response); // add restaurant
     // call get City Restaurants based on cityName
     this.restaurantService.getCityRestaurants(this.cityName);
+  }
+
+  createRestaurant(): void {
+    this.restaurantService.restaurantSubject.subscribe(next => this.rest = next);
+
+    const restaurant = JSON.stringify({name: this.restaurantName, address: this.restaurantAddress, category: this.restaurantCategory});
+    this.restaurantService.createRestaurant(restaurant);
+    console.log(restaurant);
+  }
+
+  toggleAddRestaurantForm(): void{
+    this.isFormVisible = !this.isFormVisible;
   }
 
 }
