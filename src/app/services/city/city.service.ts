@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Subject} from 'rxjs';
+import {HttpService} from '../http/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,39 +11,25 @@ export class CityService {
   cities$: any;
   citiesSubject = new Subject();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private httpService: HttpService) { }
 
   // returns an observable
   getCities$(): any{
-    // get JWT token from localStorage
-    const token = localStorage.getItem('token');
-    const requestOptions = {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      }),
-    };
-    return this.cities$ = this.http.get(this.apiUrl, requestOptions);
-
-    // this.cities$.subscribe(response => {
-    //   this.citiesSubject.next(response);
-    // });
+    // set headers using http service
+    const headers = this.httpService.getAuthenticationHeaders();
+    return this.cities$ = this.http.get(this.apiUrl, headers);
   }
 
-  getCity(name: string): any{
+  // emit a new city filtered by name
+  getCity(name: string): any {
     this.getCities$().subscribe(response => {
-      return this.citiesSubject.next(response.filter(item => item.name === name));
+      return this.citiesSubject.next(response.filter(item => item.name === name)); // then is now
     });
   }
 
   createCity(cityObject): any {
-    const token = localStorage.getItem('token');
-    const requestOptions = {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }),
-    };
-    this.http.post(this.apiUrl, cityObject, requestOptions)
+    const headers = this.httpService.getAuthenticationHeaders();
+    this.http.post(this.apiUrl, cityObject, headers)
       .subscribe(response => this.citiesSubject.next(response));
   }
 
