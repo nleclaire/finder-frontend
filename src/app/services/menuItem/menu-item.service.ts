@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
+import {HttpService} from '../http/http.service';
 
 
 @Injectable({
@@ -13,32 +14,44 @@ export class MenuItemService {
   errorText: string;
   navSubject = new Subject();
   errorSubject = new Subject();
+  menuItemsSubject = new BehaviorSubject('default');
+  menuItemModSubject = new BehaviorSubject<boolean>(false);
+  menuItemId: number;
+  isEditing = this.menuItemModSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private httpService: HttpService) { }
 
+  // tslint:disable-next-line:typedef
+  menuItemEditing(editAction: boolean) {
+    this.menuItemModSubject.next(editAction);
+  }
   addMenuItem(newItem): any {
     console.log(newItem);
-    const token = localStorage.getItem('token');
-    const requestOptions = {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      }),
-    };
+    const headers = this.httpService.getAuthentication();
     return this.http
-      .post(this.apiUrl, newItem, requestOptions);
+      .post(this.apiUrl, newItem, headers);
+  }
+
+  updateMenuItem(updatedItem): any {
+    console.log(updatedItem);
+    const headers = this.httpService.getAuthentication();
+    return this.http
+      .put(this.apiUrl + '/' + this.menuItemId, updatedItem, headers);
   }
 
   getMenuItems$(): any {
     // get JWT token from localStorage
-    const token = localStorage.getItem('token');
-    const requestOptions = {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      }),
-    };
-    return this.menuItems$ = this.http.get(this.apiUrl, requestOptions);
+    const headers = this.httpService.getAuthentication();
+    return this.menuItems$ = this.http.get(this.apiUrl, headers);
   }
 
+  getSingleMenuItem(menuItemId): any {
+    this.getMenuItems$().subscribe(response => {
+      this.menuItemId = menuItemId;
+      // tslint:disable-next-line:triple-equals
+      return this.menuItemsSubject.next(response.filter(item => item.id == menuItemId));
+    });
+  }
   getAuthErrorText(statusCode: any): string{
     console.log('STATUS: ' + statusCode);
 

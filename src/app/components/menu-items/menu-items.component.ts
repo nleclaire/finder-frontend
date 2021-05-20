@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {MenuItemService} from '../../services/menuItem/menu-item.service';
 
 @Component({
@@ -12,16 +13,42 @@ export class MenuItemsComponent implements OnInit {
   public menuItemDescription: string;
   errorText = '';
   menuItems: any[];
-  @Input() isEditing;
+  menuItemId: any;
+  singleMenuItem: any;
+  editAction: boolean;
 
-  constructor(private menuItemService: MenuItemService) { }
+  constructor(private route: ActivatedRoute, private menuItemService: MenuItemService) { }
 
   ngOnInit(): void {
-    this.menuItemService.getMenuItems$().subscribe(response => {
-      this.menuItems = response;
-      console.log(this.menuItems);
+    this.route.params.subscribe(params => {
+      this.menuItemId = params.id;
+      this.menuItemService.menuItemsSubject.subscribe(response => {
+        this.singleMenuItem = response;
+        console.log('The response is: ');
+        console.log(response);
+        console.log(this.singleMenuItem);
+      });
+      this.menuItemService.getSingleMenuItem(params.id);
     });
-    this.menuItemService.errorSubject.subscribe((error: string) => this.errorText = error);
+
+    this.menuItemService.menuItemModSubject.subscribe(editAction => this.editAction = editAction);
+
+  }
+
+  getSingleMenuItem(): any {
+    this.singleMenuItem = this.menuItemService.getSingleMenuItem(this.menuItemId);
+  }
+  editingEnabled(): void {
+    this.menuItemService.menuItemEditing(true);
+  }
+  editingDisabled(): void {
+    this.menuItemService.menuItemEditing(false);
+  }
+  updateMenuItem(): any {
+    const updatedMenuItem = {name: this.menuItemName, description: this.menuItemDescription};
+    this.menuItemService.updateMenuItem(updatedMenuItem).subscribe(response => {
+      this.menuItems = [...this.menuItems, response];
+    });
   }
 
   addMenuItem(): any {
