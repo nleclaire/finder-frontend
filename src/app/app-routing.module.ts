@@ -26,7 +26,7 @@ const routes: Routes = [
     component: CitiesPageComponent,
   },
   {
-    path: 'cities/:name',
+    path: 'cities/:name/restaurants',
     component: RestaurantsScreenComponent
   },
   {

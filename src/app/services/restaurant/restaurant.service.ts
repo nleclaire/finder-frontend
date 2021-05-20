@@ -1,19 +1,41 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {HttpService} from '../http/http.service';
+import {Subject} from 'rxjs';
+import {CityService} from '../city/city.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestaurantService {
-  apiUrl = 'https://glacial-reef-44046.herokuapp.com/api/cities/1/restaurants';
+  apiUrl = 'https://glacial-reef-44046.herokuapp.com/api/cities/';
   restaurants$: any;
+  restaurantSubject = new Subject();
+  cityName: string;
+  city: any;
 
-  constructor(private http: HttpClient, private httpService: HttpService) { }
+  constructor(private http: HttpClient, private httpService: HttpService, private cityService: CityService) { }
 
-  getRestaurants$(): any {
+  getAllRestaurants$(): any {
     // get JWT token from localStorage, create headers object
-    const headers = this.httpService.getAuthenticationHeaders();
+    const headers = this.httpService.getAuthentication();
     return this.restaurants$ = this.http.get(this.apiUrl, headers);
+  }
+
+  getCityRestaurants(cityName: string): any {
+
+    // subscribe to city subject here
+    this.cityService.citiesSubject.subscribe(response => {
+      this.city = response; // current city -> array of length 1
+
+      const headers = this.httpService.getAuthentication();
+      this.http.get(this.apiUrl + this.city[0].id + '/restaurants', headers).subscribe(next => {
+        return this.restaurantSubject.next(next); // emit restaurants based on city
+      });
+    });
+
+    // emit a new city here
+    this.cityService.getCity(cityName);
+
   }
 }

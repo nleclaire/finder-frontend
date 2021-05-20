@@ -1,6 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RestaurantService} from '../../services/restaurant/restaurant.service';
-import {MenuItemService} from '../../services/menuItem/menu-item.service';
 
 @Component({
   selector: 'app-restaurants',
@@ -8,15 +7,16 @@ import {MenuItemService} from '../../services/menuItem/menu-item.service';
   styleUrls: ['./restaurants.component.less']
 })
 export class RestaurantsComponent implements OnInit {
-  // cities: [];
-  // restaurants: [];
-  // menuItems: any[];
-  // errorText = '';
-  // @Input() isEditing = false;
+  cities: [];
+  restaurants: [];
 
-  constructor() { }
+  constructor(private restaurantService: RestaurantService) { }
 
   ngOnInit(): void {
+    this.restaurantService.getAllRestaurants$().subscribe(response => {
+      this.restaurants = response;
+      console.log(this.restaurants);
+    });
     }
 
 }
