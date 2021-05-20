@@ -51,7 +51,9 @@ export class MenuItemsComponent implements OnInit {
     });
   }
   deleteMenuItem(): any {
-
+    this.menuItemService.deleteMenuItem().subscribe(response => {
+      this.menuItems = [...this.menuItems, response];
+    });
   }
 
   addMenuItem(): any {
