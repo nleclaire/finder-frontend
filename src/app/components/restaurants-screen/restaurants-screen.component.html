@@ -3,15 +3,16 @@
     <div *ngFor="let restaurant of restaurants" class="card"><!-- render restaurants -->
       <div class="card-title">
         <!-- index of restaurants as i -->
-        {{restaurant.name}}
+        {{restaurant.name}} - {{restaurant.address}}
       </div>
       <div class="card-content">
-        {{restaurant.category}}
+        <h5>{{restaurant.category}}</h5>
       </div>
     </div>
 
     <!-- loading icon while getting restaurants -->
-    <div *ngIf="!restaurants" class="center" style="margin-top: 50px">
+    <!--  https://materializecss.com/preloader.html  -->
+    <div *ngIf="!restaurants.length" class="center" style="margin-top: 50px">
       <div class="preloader-wrapper big active">
         <div class="spinner-layer spinner-red-only">
           <div class="circle-clipper left">
@@ -26,7 +27,42 @@
     </div>
   </div>
 
-  <div class="btn white-text">Delete me</div>
+  <div *ngIf="currentUser && restaurants" class="container center-align">
+    <form *ngIf="isFormVisible" #restaurantForm="ngForm" class="col s12">
+      <div class="row">
+
+        <div class="input-field col s6" style="margin: auto">
+          <div class="form-group">
+            <input [(ngModel)]="restaurantName" id="name" type="text" class="validate white-text" name="name">
+            <label for="name">Restaurant name</label>
+          </div>
+
+          <div class="form-group">
+            <input [(ngModel)]="restaurantAddress" id="address" type="text" class="validate white-text" name="address">
+            <label for="address">Restaurant address</label>
+          </div>
+
+          <div class="form-group">
+            <input [(ngModel)]="restaurantCategory" id="category" type="text" class="validate white-text" name="category">
+            <label for="category">Restaurant category</label>
+          </div>
+        </div>
+
+        <button (click)="createRestaurant(); restaurantForm.resetForm()" class="btn waves-effect waves-light">Add Restaurant</button>
+
+      </div>
+    </form>
+
+    <div *ngIf="!isFormVisible; then content else contentElse"></div>
+    <ng-template #content>
+      <a class="btn-floating red btn-large" (click)="toggleAddRestaurantForm()"><i class="large material-icons">+</i></a>
+    </ng-template>
+
+    <ng-template #contentElse>
+      <a class="btn-floating red btn-large" (click)="toggleAddRestaurantForm()"><i class="large material-icons">-</i></a>
+    </ng-template>
+
+  </div>
 </div>
 
 

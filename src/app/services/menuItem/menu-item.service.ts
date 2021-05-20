@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {HttpService} from '../http/http.service';
-
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,7 @@ export class MenuItemService {
   menuItemId: number;
   isEditing = this.menuItemModSubject.asObservable();
 
-  constructor(private http: HttpClient, private httpService: HttpService) { }
+  constructor(private http: HttpClient, private httpService: HttpService, private router: Router) { }
 
   // tslint:disable-next-line:typedef
   menuItemEditing(editAction: boolean) {
