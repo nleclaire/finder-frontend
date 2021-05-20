@@ -1,1 +1,17 @@
-<p>{{cityName}}</p>
+<div *ngIf="currentCity" class="container">
+  <div *ngIf="restaurants">
+    <div *ngFor="let restaurant of restaurants; index as i" class="card">
+      <div class="card-title">
+        {{restaurants[i].name}}
+      </div>
+      <div class="card-content">
+        {{restaurants[i].category}}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="btn white-text">Delete me</div>
+</div>
+
+

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CityService} from '../../services/city/city.service';
+import {RestaurantService} from '../../services/restaurant/restaurant.service';
 
 @Component({
   selector: 'app-restaurants-screen',
@@ -12,7 +13,9 @@ export class RestaurantsScreenComponent implements OnInit {
   cityName: string;
   currentCity: any;
 
-  constructor(private route: ActivatedRoute, private cityService: CityService) { }
+  restaurants: any;
+
+  constructor(private route: ActivatedRoute, private cityService: CityService, private restaurantService: RestaurantService) { }
 
   // subscribe to params to get city name => filter cities by name and return single city object
   ngOnInit(): void {
@@ -26,6 +29,15 @@ export class RestaurantsScreenComponent implements OnInit {
       this.cityService.getCity(this.cityName);
       // strange async loop ^^ getCity is called first, then our citiesSubject subscriber returns
       // w/ value emitted by citiesSubject
+      this.getRestaurants();
+      console.log(this.restaurants);
+    });
+  }
+
+  getRestaurants(): any {
+    this.restaurants = this.restaurantService.getRestaurants$()
+      .subscribe(response => {
+        this.restaurants = response;
     });
   }
 
