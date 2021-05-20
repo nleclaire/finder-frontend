@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CityService} from '../../services/city/city.service';
 import {RestaurantService} from '../../services/restaurant/restaurant.service';
+import { pipe } from 'rxjs';
+import {mergeAll, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-restaurants-screen',
@@ -43,7 +45,9 @@ export class RestaurantsScreenComponent implements OnInit {
     // reset restaurants
     this.restaurants = [];
     // subscribe to restaurantSubject
-    this.restaurantService.restaurantSubject.subscribe(response => this.restaurants = [...this.restaurants, response]); // add restaurant
+    this.restaurantService.restaurantSubject.subscribe(response => {
+      this.restaurants = response;
+    }); // add restaurant
     // call get City Restaurants based on cityName
     this.restaurantService.getCityRestaurants(this.cityName);
   }

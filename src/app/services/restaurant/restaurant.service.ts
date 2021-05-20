@@ -27,6 +27,7 @@ export class RestaurantService {
     // subscribe to city subject here
     this.cityService.citiesSubject.subscribe(response => {
       this.city = response; // current city -> array of length 1
+
       const headers = this.httpService.getAuthentication();
       this.http.get(this.apiUrl + this.city[0].id + '/restaurants', headers).subscribe(next => {
         return this.restaurantSubject.next(next); // emit restaurants based on city
