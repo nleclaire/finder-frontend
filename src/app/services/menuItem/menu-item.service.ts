@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {HttpService} from '../http/http.service';
-
 
 @Injectable({
   providedIn: 'root'
@@ -14,21 +13,44 @@ export class MenuItemService {
   errorText: string;
   navSubject = new Subject();
   errorSubject = new Subject();
+  menuItemsSubject = new BehaviorSubject('default');
+  menuItemModSubject = new BehaviorSubject<boolean>(false);
+  menuItemId: number;
+  isEditing = this.menuItemModSubject.asObservable();
 
   constructor(private http: HttpClient, private httpService: HttpService, private router: Router) { }
 
+  // tslint:disable-next-line:typedef
+  menuItemEditing(editAction: boolean) {
+    this.menuItemModSubject.next(editAction);
+  }
   addMenuItem(newItem): any {
     console.log(newItem);
-    const requestOptions = this.httpService.getAuthentication();
+    const headers = this.httpService.getAuthentication();
     return this.http
-      .post(this.apiUrl, newItem, requestOptions);
+      .post(this.apiUrl, newItem, headers);
+  }
+
+  updateMenuItem(updatedItem): any {
+    console.log(updatedItem);
+    const headers = this.httpService.getAuthentication();
+    return this.http
+      .put(this.apiUrl + '/' + this.menuItemId, updatedItem, headers);
   }
 
   getMenuItems$(): any {
-    const requestOptions = this.httpService.getAuthentication();
-    return this.menuItems$ = this.http.get(this.apiUrl, requestOptions);
+    // get JWT token from localStorage
+    const headers = this.httpService.getAuthentication();
+    return this.menuItems$ = this.http.get(this.apiUrl, headers);
   }
 
+  getSingleMenuItem(menuItemId): any {
+    this.getMenuItems$().subscribe(response => {
+      this.menuItemId = menuItemId;
+      // tslint:disable-next-line:triple-equals
+      return this.menuItemsSubject.next(response.filter(item => item.id == menuItemId));
+    });
+  }
   getAuthErrorText(statusCode: any): string{
     console.log('STATUS: ' + statusCode);
 

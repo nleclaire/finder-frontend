@@ -35,13 +35,11 @@ const routes: Routes = [
   },
   {
     path: 'menuItems',
-    component: MenuItemsComponent,
-    children: [
-      {
-        path: ':id',
-        component: MenuItemsComponent
-      }
-    ]
+    component: MenuItemsComponent
+  },
+  {
+    path: 'menuItems/:id',
+    component: MenuItemsComponent
   }
 ];
 
