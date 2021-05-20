@@ -6,6 +6,7 @@ import {LoginComponent} from './components/auth/login/login.component';
 import {CitiesPageComponent} from './components/cities-page/cities-page.component';
 import {RestaurantsComponent} from './components/restaurants/restaurants.component';
 import {MenuItemsComponent} from './components/menu-items/menu-items.component';
+import {RestaurantsScreenComponent} from './components/restaurants-screen/restaurants-screen.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,11 @@ const routes: Routes = [
   },
   {
     path: 'cities',
-    component: CitiesPageComponent
+    component: CitiesPageComponent,
+  },
+  {
+    path: 'cities/:name',
+    component: RestaurantsScreenComponent
   },
   {
     path: 'restaurants',
