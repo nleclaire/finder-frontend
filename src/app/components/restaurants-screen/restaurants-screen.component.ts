@@ -14,11 +14,6 @@ export class RestaurantsScreenComponent implements OnInit {
   cityName: string;
   currentCity: any;
   currentUser: any;
-  isFormVisible: boolean;
-
-  restaurantName: string;
-  restaurantAddress: string;
-  restaurantCategory: string;
 
   rest: any;
   restaurants = [];
@@ -58,18 +53,6 @@ export class RestaurantsScreenComponent implements OnInit {
     this.restaurantService.restaurantSubject.subscribe((response: any) => this.restaurants = response); // add restaurant
     // call get City Restaurants based on cityName
     this.restaurantService.getCityRestaurants(this.cityName);
-  }
-
-  createRestaurant(): void {
-    this.restaurantService.restaurantSubject.subscribe(next => this.rest = next);
-
-    const restaurant = JSON.stringify({name: this.restaurantName, address: this.restaurantAddress, category: this.restaurantCategory});
-    this.restaurantService.createRestaurant(restaurant);
-    console.log(restaurant);
-  }
-
-  toggleAddRestaurantForm(): void{
-    this.isFormVisible = !this.isFormVisible;
   }
 
 }
