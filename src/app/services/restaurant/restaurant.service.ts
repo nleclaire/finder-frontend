@@ -13,6 +13,7 @@ export class RestaurantService {
   restaurantSubject = new Subject();
   cityName: string;
   city: any;
+  currentRestaurant: any;
 
   constructor(private http: HttpClient, private httpService: HttpService, private cityService: CityService) { }
 

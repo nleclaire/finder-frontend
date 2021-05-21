@@ -17,6 +17,7 @@ export class MenuItemsListComponent implements OnInit, OnChanges {
   errorText = '';
   @Input() isEditing = false;
   editAction: boolean;
+  cityName: string;
 
   constructor(private menuItemService: MenuItemService, private route: ActivatedRoute, private cityService: CityService) { }
 
@@ -33,7 +34,10 @@ export class MenuItemsListComponent implements OnInit, OnChanges {
     this.route.params.subscribe(params => {
       console.log(params);
       this.restaurantId = params.id;
+      this.city = this.cityService.currentCity;
+      this.cityName = this.city[0].name;
       this.getMenuItems();
+      console.log(this.city);
     });
   }
 

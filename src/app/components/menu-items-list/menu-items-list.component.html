@@ -2,7 +2,7 @@
   <div class="card-title">{{menuItem.name}}</div>
   <div class="card-content"> {{menuItem.description}}</div>
   <div class="card-action">
-    <a (click)="editingEnabled()" routerLink="/menuItems/{{menuItem.id}}">Edit Menu Item</a>
+    <a (click)="editingEnabled()" routerLink="/cities/{{cityName}}/restaurants/{{restaurantId}}/menuItems/{{menuItem.id}}">Edit Menu Item</a>
   </div>
 </div>
 
@@ -11,5 +11,5 @@
 </div>
 
 <div class="card-action">
-  <a (click)="editingDisabled()" routerLink="/menuItems">Add Menu Item</a>
+  <a (click)="editingDisabled()" routerLink="/cities/{{cityName}}/restaurants/{{restaurantId}}/menuItems">Add Menu Item</a>
 </div>

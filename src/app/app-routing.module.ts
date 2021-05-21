@@ -47,6 +47,14 @@ const routes: Routes = [
   {
     path: 'menuItems/:id',
     component: MenuItemsComponent
+  },
+  {
+    path: 'cities/:name/restaurants/:restaurantId/menuItems/:id',
+    component: MenuItemsComponent
+  },
+  {
+    path: 'cities/:name/restaurants/:restaurantId/menuItems',
+    component: MenuItemsComponent
   }
 ];
 
