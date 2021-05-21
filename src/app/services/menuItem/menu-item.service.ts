@@ -39,6 +39,11 @@ export class MenuItemService {
     return this.http
       .put(this.apiUrl + '/' + this.menuItemId, updatedItem, headers);
   }
+  deleteMenuItem(): any {
+    const headers = this.httpService.getAuthentication();
+    return this.http
+      .delete(this.apiUrl + '/' + this.menuItemId, headers);
+  }
 
   getMenuItems$(restaurantId): any {
     // get JWT token from localStorage
