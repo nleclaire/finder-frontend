@@ -1,28 +1,34 @@
 <div *ngIf="currentCity" class="container">
-  <div *ngIf="restaurants"><!-- if there are any restaurants -->
-    <div *ngFor="let restaurant of restaurants" class="card"><!-- render restaurants -->
-      <div class="card-title">
-        <!-- index of restaurants as i -->
-        {{restaurant.name}} - {{restaurant.address}}
-      </div>
-      <div class="card-content">
-        <h5>{{restaurant.category}}</h5>
-      </div>
+  <div *ngIf="restaurants" class="card container-card red darken-1"><!-- if there are any restaurants -->
+    <div *ngFor="let restaurant of restaurants" class="card red darken-4"><!-- render restaurants -->
+
+      <a routerLink="/menuItemsList/{{restaurant.id}}" class="card-title white-text" style="display: flex; padding: 10px">
+        <div class="card blue darken-3" style="width: 50px; height: 50px; margin: 10px; align-self: center"></div>
+        {{restaurant.name}}
+      </a>
+
+      <ul class="card-content">
+        <li>{{restaurant.category}}</li>
+        <li>{{restaurant.address}}</li>
+      <!-- <div class="btn" (click)="editRestaurant()">Edit</div>-->
+      </ul>
+
     </div>
 
-    <!-- loading icon while getting restaurants -->
+    <!-- loading icon -->
     <!--  https://materializecss.com/preloader.html  -->
     <div *ngIf="!restaurants.length" class="center" style="margin-top: 50px">
       <app-loader></app-loader>
     </div>
 
-  <!-- form to submit new restaurants -->
-    <div *ngIf="currentUser && restaurants" class="container center-align">
-      <app-restaurant-form></app-restaurant-form>
+    <!-- form to submit new restaurants -->
+    <div *ngIf="currentUser && restaurants" class="container">
+      <app-restaurant-form style="justify-self: center"></app-restaurant-form>
     </div>
 
   </div>
 
+<!--  <router-outlet></router-outlet>-->
   <app-restaurants></app-restaurants>
 </div>
 
