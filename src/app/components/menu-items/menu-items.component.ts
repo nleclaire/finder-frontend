@@ -14,6 +14,7 @@ export class MenuItemsComponent implements OnInit {
   errorText = '';
   menuItems: any[];
   menuItemId: any;
+  restaurantId: any;
   singleMenuItem: any;
   editAction: boolean;
 
@@ -21,6 +22,7 @@ export class MenuItemsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      console.log(params);
       this.menuItemId = params.id;
       this.menuItemService.menuItemsSubject.subscribe(response => {
         this.singleMenuItem = response;
@@ -28,7 +30,7 @@ export class MenuItemsComponent implements OnInit {
         console.log(response);
         console.log(this.singleMenuItem);
       });
-      this.menuItemService.getSingleMenuItem(params.id);
+      this.menuItemService.getSingleMenuItem(this.menuItemId);
     });
 
     this.menuItemService.menuItemModSubject.subscribe(editAction => this.editAction = editAction);
