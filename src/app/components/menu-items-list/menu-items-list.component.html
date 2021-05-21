@@ -6,6 +6,10 @@
   </div>
 </div>
 
+<div *ngIf="!menuItems">
+  <app-loader></app-loader>
+</div>
+
 <div class="card-action">
   <a (click)="editingDisabled()" routerLink="/menuItems">Add Menu Item</a>
 </div>

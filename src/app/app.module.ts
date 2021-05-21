@@ -17,6 +17,7 @@ import {CityComponent} from './components/city/city.component';
 import { RestaurantsScreenComponent } from './components/restaurants-screen/restaurants-screen.component';
 import { MenuItemsListComponent } from './components/menu-items-list/menu-items-list.component';
 import { RestaurantFormComponent } from './components/restaurant-form/restaurant-form.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { RestaurantFormComponent } from './components/restaurant-form/restaurant
     MenuItemsComponent,
     RestaurantsScreenComponent,
     MenuItemsListComponent,
-    RestaurantFormComponent
+    RestaurantFormComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
