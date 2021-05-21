@@ -3,12 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {HttpService} from '../http/http.service';
+import {CityService} from '../city/city.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuItemService {
-  apiUrl = 'https://glacial-reef-44046.herokuapp.com/api/cities/1/restaurants/7/menu';
+  apiUrl = 'https://glacial-reef-44046.herokuapp.com/api/cities/';
   menuItems$: any;
   errorText: string;
   navSubject = new Subject();
@@ -17,8 +18,9 @@ export class MenuItemService {
   menuItemModSubject = new BehaviorSubject<boolean>(false);
   menuItemId: number;
   isEditing = this.menuItemModSubject.asObservable();
+  city: any;
 
-  constructor(private http: HttpClient, private httpService: HttpService, private router: Router) { }
+  constructor(private http: HttpClient, private httpService: HttpService, private router: Router, private cityService: CityService) { }
 
   // tslint:disable-next-line:typedef
   menuItemEditing(editAction: boolean) {
@@ -38,14 +40,17 @@ export class MenuItemService {
       .put(this.apiUrl + '/' + this.menuItemId, updatedItem, headers);
   }
 
-  getMenuItems$(): any {
+  getMenuItems$(restaurantId): any {
     // get JWT token from localStorage
     const headers = this.httpService.getAuthentication();
-    return this.menuItems$ = this.http.get(this.apiUrl, headers);
+    this.city = this.cityService.currentCity;
+    console.log(this.city[0].id);
+    return this.menuItems$ = this.http.get(this.apiUrl + this.city[0].id + '/restaurants/' + restaurantId + '/menu/', headers);
+
   }
 
   getSingleMenuItem(menuItemId): any {
-    this.getMenuItems$().subscribe(response => {
+    this.getMenuItems$(this.cityService.currentCity.id).subscribe(response => {
       this.menuItemId = menuItemId;
       // tslint:disable-next-line:triple-equals
       return this.menuItemsSubject.next(response.filter(item => item.id == menuItemId));

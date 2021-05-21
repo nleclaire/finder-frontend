@@ -7,6 +7,7 @@ import {CitiesPageComponent} from './components/cities-page/cities-page.componen
 import {RestaurantsComponent} from './components/restaurants/restaurants.component';
 import {MenuItemsComponent} from './components/menu-items/menu-items.component';
 import {RestaurantsScreenComponent} from './components/restaurants-screen/restaurants-screen.component';
+import {MenuItemsListComponent} from './components/menu-items-list/menu-items-list.component';
 
 const routes: Routes = [
   {
@@ -27,7 +28,13 @@ const routes: Routes = [
   },
   {
     path: 'cities/:name/restaurants',
-    component: RestaurantsScreenComponent
+    component: RestaurantsScreenComponent,
+    children: [
+      {
+        path: ':id',
+        component: RestaurantsComponent
+      }
+    ]
   },
   {
     path: 'restaurants',

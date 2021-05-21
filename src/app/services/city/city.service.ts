@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {HttpService} from '../http/http.service';
 
 @Injectable({
@@ -10,6 +10,7 @@ export class CityService {
   apiUrl = 'https://glacial-reef-44046.herokuapp.com/api/cities';
   cities$: any;
   citiesSubject = new Subject();
+  currentCity: any;
 
   constructor(private http: HttpClient, private httpService: HttpService) { }
 
@@ -24,6 +25,7 @@ export class CityService {
   // must be subscribed before then
   getCity(name: string): any {
     this.getCities$().subscribe(response => {
+      this.currentCity = response.filter(item => item.name === name);
       return this.citiesSubject.next(response.filter(item => item.name === name)); // then is now
     });
   }
