@@ -23,17 +23,17 @@
 
 <div *ngIf="editAction" class="row menuItem">
   <h2 class="white-text center-align">Editing Menu Item...</h2>
-  <form *ngFor="let singleItem of singleMenuItem" class="col s12 card-panel">
+  <form *ngIf="singleMenuItem" class="col s12 card-panel">
     <div class="row">
       <div class="input-field col s6">
         <p>Enter new item name below:</p>
-        <input [(ngModel)]="menuItemName" name="menuItemName" type="text" [placeholder]="singleItem.name">
+        <input [(ngModel)]="menuItemName" name="menuItemName" type="text" [placeholder]="singleMenuItem[0].name">
       </div>
     </div>
     <div class="row">
       <div class="input-field col s12">
         <p>Enter new description below:</p>
-        <input [(ngModel)]="menuItemDescription" name="menuItemDescription" type="text" [placeholder]="singleItem.description">
+        <input [(ngModel)]="menuItemDescription" name="menuItemDescription" type="text" [placeholder]="singleMenuItem[0].description">
       </div>
     </div>
     <div class="row">

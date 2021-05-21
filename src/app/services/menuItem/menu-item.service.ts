@@ -14,9 +14,10 @@ export class MenuItemService {
   errorText: string;
   navSubject = new Subject();
   errorSubject = new Subject();
-  menuItemsSubject = new BehaviorSubject('default');
+  menuItemsSubject = new Subject();
   menuItemModSubject = new BehaviorSubject<boolean>(false);
   menuItemId: number;
+  restaurantId: any;
   isEditing = this.menuItemModSubject.asObservable();
   city: any;
 
@@ -30,32 +31,32 @@ export class MenuItemService {
     console.log(newItem);
     const headers = this.httpService.getAuthentication();
     return this.http
-      .post(this.apiUrl, newItem, headers);
+      .post(this.apiUrl + this.city[0].id + '/restaurants/' + this.restaurantId + '/menu', newItem, headers);
   }
 
   updateMenuItem(updatedItem): any {
     console.log(updatedItem);
     const headers = this.httpService.getAuthentication();
     return this.http
-      .put(this.apiUrl + '/' + this.menuItemId, updatedItem, headers);
+      .put(this.apiUrl + this.city[0].id + '/restaurants/' + this.restaurantId + '/menu/' + this.menuItemId, updatedItem, headers);
   }
   deleteMenuItem(): any {
     const headers = this.httpService.getAuthentication();
     return this.http
-      .delete(this.apiUrl + '/' + this.menuItemId, headers);
+      .delete(this.apiUrl + this.city[0].id + '/restaurants/' + this.restaurantId + '/menu/' + this.menuItemId, headers);
   }
 
   getMenuItems$(restaurantId): any {
     // get JWT token from localStorage
     const headers = this.httpService.getAuthentication();
     this.city = this.cityService.currentCity;
-    console.log(this.city[0].id);
+    this.restaurantId = restaurantId;
     return this.menuItems$ = this.http.get(this.apiUrl + this.city[0].id + '/restaurants/' + restaurantId + '/menu/', headers);
 
   }
 
   getSingleMenuItem(menuItemId): any {
-    this.getMenuItems$(this.cityService.currentCity.id).subscribe(response => {
+    this.getMenuItems$(this.restaurantId).subscribe(response => {
       this.menuItemId = menuItemId;
       // tslint:disable-next-line:triple-equals
       return this.menuItemsSubject.next(response.filter(item => item.id == menuItemId));
